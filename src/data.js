@@ -11,7 +11,7 @@ player={playtime:0,
 	depth:0,
 	options:{notation:0},
 	version:0.1,
-	beta:1}
+	beta:1.1}
 tickSpeed=0
 tickDone=true
 lastSave=0

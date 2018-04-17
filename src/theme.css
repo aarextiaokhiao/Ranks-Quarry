@@ -42,3 +42,13 @@ button:active {background-color:#999999}
 	bottom:0;
 	width:100%;
 	font-size:24px}
+	
+	
+	
+#changelog {text-align:center}
+
+#changelog div {font-size:24px}
+
+#changelog h1 {font-size:48px}
+
+#changelog h2 {font-size:36px}

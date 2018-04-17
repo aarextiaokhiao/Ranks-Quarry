@@ -126,6 +126,11 @@ function loadSave(savefile) {
 		savefile.coins=new Decimal(savefile.coins)
 		savefile.totalCoins=new Decimal(savefile.totalCoins)
 	
+		if (savefile.version>player.version) throw 'This savefile, which has version '+savefile.version+' saved, was incompatible to version '+player.version+'.'
+		else if (savefile.version==player.version) {
+			if (savefile.beta>player.beta) throw 'This savefile, which has beta '+savefile.beta+' saved, was incompatible to beta '+player.beta+'.'			
+		}
+		
 		player=savefile
 	} catch (e) {
 		console.log('A error has been occurred while loading:')
