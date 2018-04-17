@@ -1,0 +1,44 @@
+body {background-color:#727272;
+	font-size:12px;
+	font-family:'Roboto';
+	color:#191919;
+	margin:0}
+	
+button {background-color:#bfbfbf;
+	border:none;
+	font-family:'Roboto';
+	transition-duration:0.25s}
+button:hover {background-color:#e5e5e5}
+button:active {background-color:#999999}
+	
+#loading {background-color:#999999;
+	position:fixed;
+	top:0%;
+	height:100%;
+	width:100%;
+	font-size:36px;
+	transition-duration:2s;
+	z-index:1}
+	
+#resources {position:absolute;
+	right:0}
+	
+#stone {position:fixed;
+	left:50%;
+	top:50%;
+	transform:translate(-50%,-50%);
+	font-size:36px;
+	text-align:center}
+	
+#stoneDisplay {background-color:#4c4c4c;
+	height:360px;
+	width:360px}
+#stoneDisplay:hover {background-color:#666666}
+#stoneDisplay:active {background-color:#333333}
+
+#footer {background-color:rgba(25,25,25,0.25);
+	position:fixed;
+	left:0;
+	bottom:0;
+	width:100%;
+	font-size:24px}

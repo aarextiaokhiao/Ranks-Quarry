@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	<title>Ranks: Quarry</title>
+	<link href='src/theme.css' rel='stylesheet'>
+	<script type="text/javascript" src="src/break_infinity.min.js"></script>
+	<script type="text/javascript" src="src/data.js"></script>
+	<script type="text/javascript" src="src/updates.js"></script>
+	<script type="text/javascript" src="src/core.js"></script>
+</head>
+<body onload='loadGame()'>
+	<div id='loading'>
+		<div style='position:absolute;top:50%;transform:translate(0,-50%);background-color:rgba(25,25,25,0.25);width:100%;text-align:center'><text style='font-size:72px'><b style='color:#00e500'>Ranks</b>: Quarry</text><br>Game is now loading, please wait...</div>
+		<div style='position:absolute;bottom:0;left:0;color:rgba(25,25,25,0.25)'>v0.1 beta 1<br>2018 Aarex T.</div>
+	</div>
+	<div id='mainGame' style='display:none'>
+		<div id='tab_quarry'>
+			<div id='stone'><button id='stoneDisplay' onclick='mineStone()'></button><br><b>HP</b>: <text id='hp'>10/10</text></div>
+		</div>
+		<div id='footer'>
+			<a href='changelog.html' target="_newtab">Change log</a> | <a href='https://discord.gg/rJxkhzK' target="_newtab">Discord server</a>
+			<text id='resources'>0 Stone | 0 Coins | Rank 1</text>
+		</div>
+	</div>
+</body>
