@@ -11,11 +11,71 @@
 <body onload='loadGame()'>
 	<div id='loading'>
 		<div style='position:absolute;top:50%;transform:translate(0,-50%);background-color:rgba(25,25,25,0.25);width:100%;text-align:center'><text style='font-size:72px'><b style='color:#00e500'>Ranks</b>: Quarry</text><br>Game is now loading, please wait...</div>
-		<div style='position:absolute;bottom:0;left:0;color:rgba(25,25,25,0.25)'>v0.1 beta 1.1<br>2018 Aarex T.</div>
+		<div style='position:absolute;bottom:0;left:0;color:rgba(25,25,25,0.25)'>v0.1 beta 2<br>2018 Aarex T.</div>
 	</div>
 	<div id='mainGame' style='display:none'>
+		<div id='header'>
+			<table><tr><td><button onclick='switchTab("quarry")'>Quarry</button></td>
+			<td><button class='darkButton' onclick='switchTab("statistics")'>Statistics</button></td>
+			<td><button onclick='switchTab("options")'>Options</button></td>
+			<td><button class='darkButton' onclick='switchTab("about")'>About</button></td></tr></table>
+		</div>
 		<div id='tab_quarry'>
-			<div id='stone'><button id='stoneDisplay' onclick='mineStone()'></button><br><b>HP</b>: <text id='hp'>10/10</text></div>
+			<div id='stone'><b id='oreName'>Stone</b><br>
+				<div id='stoneDisplay'><button id='stoneDisplay_button' onclick='mineStone()'></button></div>
+				<b>HP</b>: <text id='hp'>10/10</text><br>
+				<b>Power</b>: <text id='power'>1</text></div>
+			<div id='frame_ores' style='position:fixed;left:0;top:48px'><button id='sell' onclick='sell()'>Sell ores</button><div id='ores'></div></div>
+			<div id='frame_upgrades' style='position:fixed;right:0;top:48px;text-align:right'><b style='font-size:24px'>Upgrades</b><br>
+				<b>Bronze Pickaxe</b><br>Power is 1.5x stronger.<br><button class='upgradeButton' id='upg1' onclick='buyUpgrade(1)'>Cost: 100 coins</button><br>
+				<b>Iron Pickaxe</b><br>Power is 1.5x stronger.<br><button class='upgradeButton' id='upg2' onclick='buyUpgrade(2)'>Cost: 100 coins</button></div>
+		</div>
+		<div class='tab' id='tab_statistics' style='display:none'>
+			<table style="width:100%; padding:0; display:table">
+				<tr id='statsPlaytime'>
+					<td style='text-align:left'><b>Time since you started:</td>
+					<td id='statsPlaytimeValue' style='width:240px'></td>
+				</tr>
+				<tr id='statsTotalDamage'>
+					<td style='text-align:left'><b>Total damage you took:</td>
+					<td id='statsTotalDamageValue' style='width:240px'></td>
+				</tr>
+				<tr id='statsTotalStone'>
+					<td style='text-align:left'><b>Total stone you mined:</td>
+					<td id='statsTotalStoneValue' style='width:240px'></td>
+				</tr>
+				<tr id='statsTotalOres'>
+					<td style='text-align:left'><b>Total ores you gained:</td>
+					<td id='statsTotalOresValue' style='width:240px'></td>
+				</tr>
+				<tr id='statsTotalCoins'>
+					<td style='text-align:left'><b>Total coins you gained:</td>
+					<td id='statsTotalCoinsValue' style='width:240px'></td>
+				</tr>
+			</table>
+			<div class='footerBlockage'></div>
+		</div>
+		<div class='tab' id='tab_options' style='display:none'>
+			<h1>Saving</h1>
+			<table><tr>
+				<td><button class='optionButton' onClick='saveGame()'>Save</button></td>
+				<td><button class='optionButton' onClick='exportSave()'>Export</button></td>
+				<td><button class='optionButton' onClick='importSave()'>Import</button></td>
+				<td><button class='optionButton' onClick='resetGame()'>Reset</button></td>
+			</tr></table>
+			<div id='exportSave' style='display:none'>Here is your export save. Enjoy!<br><textarea id='exportText' style='height:60px;width:480px'></textarea></div>
+			<h1>Display</h1>
+			<table><tr>
+				<td><button class='optionButton' id='notationOption' onClick='switchNotation()'></button></td>
+				<td><button class='optionButton' id='updateRate' onClick='changeUpdateRate()'></button></td>
+			</tr></table>
+			<div class='footerBlockage'></div>
+		</div>
+		<div class='tab' id='tab_about' style='display:none;text-align:center;font-size:24px'>
+			<div style='background-color:rgba(25,25,25,0.25);width:100%;font-size:36px;text-align:center'><text style='font-size:72px'><b style='color:#00e500'>Ranks</b>: Quarry</text><br>v0.2; 2018 Aarex T.</div>
+			<a href='http://aarextiaokhiao.github.io/Ranks' target="_newtab">Ranks</a> is the game where you must rank up to unlock more content. This time, you are now mining stone.<br>
+			<b style='font-size:36px'>Credits</b><br>
+			<list><li>Patashu - break_infinity.js</li></list>
 		</div>
 		<div id='footer'>
 			<a href='changelog.html' target="_newtab">Change log</a> | <a href='https://discord.gg/rJxkhzK' target="_newtab">Discord server</a>

@@ -5,11 +5,21 @@ body {background-color:#727272;
 	margin:0}
 	
 button {background-color:#bfbfbf;
+	height:36px;
+	width:120px;
 	border:none;
+	font-size:24px;
 	font-family:'Roboto';
 	transition-duration:0.25s}
 button:hover {background-color:#e5e5e5}
 button:active {background-color:#999999}
+	
+.darkButton {background-color:#999999}
+.darkButton:hover {background-color:#bfbfbf}
+.darkButton:active {background-color:#7f7f7f}
+
+.optionButton {height:72px;
+	width:180px}
 	
 #loading {background-color:#999999;
 	position:fixed;
@@ -18,30 +28,80 @@ button:active {background-color:#999999}
 	width:100%;
 	font-size:36px;
 	transition-duration:2s;
-	z-index:1}
+	z-index:2}
 	
 #resources {position:absolute;
-	right:0}
+	right:0;
+	font-size:12px;
+	text-align:right}
 	
 #stone {position:fixed;
 	left:50%;
 	top:50%;
 	transform:translate(-50%,-50%);
-	font-size:36px;
+	font-size:24px;
 	text-align:center}
 	
-#stoneDisplay {background-color:#4c4c4c;
-	height:360px;
-	width:360px}
-#stoneDisplay:hover {background-color:#666666}
-#stoneDisplay:active {background-color:#333333}
+#stoneDisplay {position:relative;
+	height:240px;
+	width:240px}
+	
+#stoneDisplay_button {background-color:rgba(229,229,229,0);
+	position:absolute;
+	height:240px;
+	width:240px;
+	left:0;
+	top:0}
+#stoneDisplay_button:hover {background-color:rgba(229,229,229,0.1)}
+#stoneDisplay_button:active {background-color:rgba(25,25,25,0.1)}
+	
+.ore_Stone {background-color:#4c4c4c}
+	
+.ore_Iron {background-color:#e5ceb7}
+	
+.ore_Bronze {background-color:#e57e16}
+	
+.ore_Silver {background-color:#b2b2b2}
+	
+.ore_Gold {background-color:#b2b259}
 
-#footer {background-color:rgba(25,25,25,0.25);
+#sell {font-size:16px}
+
+.upgradeButton {height:24px;font-size:12px}
+
+.cantAfford, .cantAfford:hover, .cantAfford:active {background-color:#999999}
+
+.bought, .bought:hover, .bought:active {background-color:#00e500}
+
+#header {position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	overflow-x:auto;
+	z-index:1}
+
+#header table {
+	padding:0;
+	border-spacing:0;
+}
+
+#header td {
+	padding:0
+}
+
+#footer {background-color:#5b5b5b;
 	position:fixed;
 	left:0;
 	bottom:0;
 	width:100%;
-	font-size:24px}
+	font-size:24px;
+	z-index:1}
+
+.tab {position:absolute;
+	top:48px;
+	width:100%}
+
+.footerBlockage {height:24px}
 	
 	
 	
