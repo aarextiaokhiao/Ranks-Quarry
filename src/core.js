@@ -230,6 +230,10 @@ function loadSave(savefile) {
 				savefile.currentStone.ore='Stone'
 				savefile.options.updateRate=20
 			}
+			if (savefile.beta<3) {
+				savefile.depth=1
+				savefile.maxDepth=1
+			}
 		}
 		
 		savefile.totalDamage=new Decimal(savefile.totalDamage)
@@ -255,6 +259,7 @@ function loadSave(savefile) {
 		updateNextRankText()
 		updateCoinGain()
 		updatePickaxePower()
+		updateNextDepthRequirement()
 		maxMillisPerTick=1000/player.options.updateRate
 	} catch (e) {
 		console.log('A error has been occurred while loading:')
@@ -290,7 +295,8 @@ function resetGame() {
 		player.coins=new Decimal(0)
 		player.totalCoins=new Decimal(0)
 		player.upgrades=[]
-		player.depth=0
+		player.depth=1
+		player.maxDepth=1
 		player.options={notation:0,
 			updateRate:20}
 		
@@ -299,6 +305,7 @@ function resetGame() {
 		nextRankText='(Next rank requires 10 stone)'
 		coinGain=new Decimal(0)
 		pickaxePower=new Decimal(1)
+		nextDepthRequirement=new Decimal(200)
 		maxMillisPerTick=50
 		
 		gameLoopInterval=setInterval(gameLoop,maxMillisPerTick)
