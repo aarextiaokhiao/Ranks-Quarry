@@ -14,7 +14,7 @@ player={playtime:0,
 	options:{notation:0,
 		updateRate:20},
 	version:0.1,
-	beta:2}
+	beta:2.1}
 const timeframes={year:31556952,
 	month:2629746,
 	day:86400,
@@ -39,5 +39,5 @@ const rankRequirements=[{stone:new Decimal(10)}]
 ores={Stone:{mult:1},Iron:{mult:1.2},Bronze:{mult:1.5},Silver:{mult:1.7},Gold:{mult:2}}
 nextRankText='(Next rank requires 10 stone)'
 coinGain=new Decimal(0)
-const costs={upgrades:[100,1e3]}
+const costs={upgrades:[50,200]}
 pickaxePower=new Decimal(1)

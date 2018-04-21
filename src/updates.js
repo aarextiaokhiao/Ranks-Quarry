@@ -66,20 +66,22 @@ function gameTick() {
 			updateElement('power',format(pickaxePower))
 		}
 		if (player.rank>1) {
-			showElement('frame_ores','block')
 			showElement('frame_upgrades','block')
 			
 			var oreListText=''
 			for (ore in ores) {
 				if (player.ores[ore]!=undefined) oreListText=oreListText+ore+': '+format(player.ores[ore])+'<br>'
 			}
-			updateElement('ores',oreListText)
-			if (coinGain.eq(1)) {
-				updateElement('sell','Sell ores<br>(+1 coin)')
-			} else if (coinGain.eq(0)) {
-				updateElement('sell','Sell ores')
+			if (oreListText=='') {
+				hideElement('frame_ores')
 			} else {
-				updateElement('sell','Sell ores<br>(+'+format(coinGain)+' coins)')
+				showElement('frame_ores','block')
+				updateElement('ores',oreListText)
+				if (coinGain.eq(1)) {
+					updateElement('sell','Sell ores<br>(+1 coin)')
+				} else {
+					updateElement('sell','Sell ores<br>(+'+format(coinGain)+' coins)')
+				}
 			}
 			
 			for (upgradeNum=1;upgradeNum<3;upgradeNum++) {
