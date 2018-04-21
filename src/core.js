@@ -305,7 +305,7 @@ function resetGame() {
 		nextRankText='(Next rank requires 10 stone)'
 		coinGain=new Decimal(0)
 		pickaxePower=new Decimal(1)
-		nextDepthRequirement=new Decimal(200)
+		nextDepthRequirement=new Decimal(100)
 		maxMillisPerTick=50
 		
 		gameLoopInterval=setInterval(gameLoop,maxMillisPerTick)

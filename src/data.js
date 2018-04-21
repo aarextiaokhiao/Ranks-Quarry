@@ -15,7 +15,7 @@ player={playtime:0,
 	options:{notation:0,
 		updateRate:20},
 	version:0.1,
-	beta:3}
+	beta:3.01}
 const timeframes={year:31556952,
 	month:2629746,
 	day:86400,
