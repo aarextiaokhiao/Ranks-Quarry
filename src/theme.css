@@ -30,9 +30,9 @@ button:active {background-color:#999999}
 	transition-duration:2s;
 	z-index:2}
 	
-#resources {position:absolute;
+#rank {position:absolute;
 	right:0;
-	font-size:12px;
+	font-size:24px;
 	text-align:right}
 	
 #stone {position:fixed;
@@ -116,3 +116,6 @@ button:active {background-color:#999999}
 #changelog h1 {font-size:48px}
 
 #changelog h2 {font-size:36px}
+
+#changelog .slogan {color:rgba(25,25,25,0.5);
+	font-size:24px}

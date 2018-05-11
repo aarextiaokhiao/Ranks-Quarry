@@ -10,12 +10,13 @@ player={playtime:0,
 	coins:new Decimal(0),
 	totalCoins:new Decimal(0),
 	upgrades:[],
+	workers:{waitUntilDamage:new Decimal(0)},
 	depth:1,
 	maxDepth:1,
 	options:{notation:0,
 		updateRate:20},
 	version:0.1,
-	beta:3.01}
+	beta:3.1}
 const timeframes={year:31556952,
 	month:2629746,
 	day:86400,
@@ -32,15 +33,19 @@ tickSpeed=0
 tickDone=true
 maxMillisPerTick=50
 gameLoopInterval=null
+simulatedTicksLeft=1000
+simulatedTickLength=0
 lastSave=0
+sinceLastSave=0
 currentTab='quarry'
 oldTab='quarry'
 
-const rankRequirements=[{stone:5},{coins:200}/*,{maxDepth:4}*/]
+const rankRequirements=[{stone:5},{coins:100}/*,{maxDepth:4}*/]
 ores={Stone:{mult:1},Iron:{mult:1.2,depth:1},Bronze:{mult:1.5,depth:1},Silver:{mult:1.7,depth:1},Gold:{mult:2,depth:1},Ruby:{mult:2.5,depth:2},Sapphire:{mult:3,depth:3}}
 nextRankText='(Next rank requires 5 stone)'
 coinGain=new Decimal(0)
-const costs={upgrades:[20,100,300,700]}
-const upgradeLimits=[2,4]
+const costs={upgrades:[3,20,50,150,300]}
+const upgradeLimits=[3,5]
+totalHPS=new Decimal(0)
 pickaxePower=new Decimal(1)
 nextDepthRequirement=new Decimal(100)

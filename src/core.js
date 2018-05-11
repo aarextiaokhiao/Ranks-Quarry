@@ -234,6 +234,15 @@ function loadSave(savefile) {
 				savefile.depth=1
 				savefile.maxDepth=1
 			}
+			if (savefile.beta<3.1) {
+				savefile.workers={waitUntilDamage:0}
+				
+				var tempUpgrades=[]
+				for (id in savefile.upgrades) {
+					tempUpgrades.push(parseInt(id)+1)
+				}
+				savefile.upgrades=tempUpgrades
+			}
 		}
 		
 		savefile.totalDamage=new Decimal(savefile.totalDamage)
@@ -245,6 +254,7 @@ function loadSave(savefile) {
 		savefile.totalOres=new Decimal(savefile.totalOres)
 		savefile.coins=new Decimal(savefile.coins)
 		savefile.totalCoins=new Decimal(savefile.totalCoins)
+		savefile.workers.waitUntilDamage=new Decimal(savefile.workers.waitUntilDamage)
 	
 		if (savefile.version>player.version) throw 'This savefile, which has version '+savefile.version+' saved, was incompatible to version '+player.version+'.'
 		else if (savefile.version==player.version) {
@@ -258,9 +268,19 @@ function loadSave(savefile) {
 		hideElement('exportSave')
 		updateNextRankText()
 		updateCoinGain()
+		updateHPS()
 		updatePickaxePower()
 		updateNextDepthRequirement()
 		maxMillisPerTick=1000/player.options.updateRate
+		
+		simulatedTickLength=(new Date().getTime()-player.lastUpdate)/1e6
+		if (simulatedTickLength>0.1) {
+			simulatedTicksLeft=1000
+			while (simulatedTicksLeft>0) {
+				gameLoop(true)
+				simulatedTicksLeft--
+			}
+		}
 	} catch (e) {
 		console.log('A error has been occurred while loading:')
 		console.error(e)
@@ -295,6 +315,7 @@ function resetGame() {
 		player.coins=new Decimal(0)
 		player.totalCoins=new Decimal(0)
 		player.upgrades=[]
+		player.workers={waitUntilDamage:new Decimal(0)}
 		player.depth=1
 		player.maxDepth=1
 		player.options={notation:0,
@@ -304,6 +325,7 @@ function resetGame() {
 		hideElement('exportSave')
 		nextRankText='(Next rank requires 10 stone)'
 		coinGain=new Decimal(0)
+		totalHPS=new Decimal(0)
 		pickaxePower=new Decimal(1)
 		nextDepthRequirement=new Decimal(100)
 		maxMillisPerTick=50

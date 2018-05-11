@@ -1,11 +1,13 @@
-function gameTick() {
+function gameTick(simulated=false) {
 	var tickTime=new Date().getTime()
 	if (player.lastTick>0) {
-		if (tickTime-lastSave>59999) {
+		sinceLastSave=Math.floor((tickTime-lastSave)/1000)
+		if (sinceLastSave>59) {
 			saveGame()
 		}
 		
-		var delta=(tickTime-player.lastTick)/1000
+		if (simulated) var delta=simulatedTickLength
+		else var delta=(tickTime-player.lastTick)/1000
 		player.playtime+=delta
 		
 		ableToRankUp=true
@@ -34,6 +36,15 @@ function gameTick() {
 		} while (ableToRankUp)
 		if (needToUpdate) updateNextRankText()
 		
+		if (totalHPS.gt(0)) {
+			player.workers.waitUntilDamage=player.workers.waitUntilDamage.add(totalHPS.times(delta))
+			if (player.workers.waitUntilDamage.gte(1)) {
+				var totalDamagePerTick=player.workers.waitUntilDamage.floor()
+				player.currentStone.hp=player.currentStone.hp.sub(totalDamagePerTick)
+				player.workers.waitUntilDamage=player.workers.waitUntilDamage.sub(totalDamagePerTick)
+			}
+		}
+	
 		if (player.currentStone.hp.lte(0)) {
 			var add=Decimal.pow(1.45,player.depth-1).div(ores[player.currentStone.ore].mult).ceil()
 			if (player.currentStone.ore=='Stone') {
@@ -59,7 +70,8 @@ function gameTick() {
 	}
 	player.lastTick=tickTime
 	
-	updateElement('resources','Stone: '+format(player.stone)+' | Coins: '+format(player.coins)+' | Rank: '+player.rank+'<br>'+nextRankText)
+	if (simulated) return
+	updateElement('rankNumber',player.rank+' '+nextRankText)
 	if (currentTab!=oldTab) {
 		hideElement('tab_'+oldTab)
 		showElement('tab_'+currentTab,'block')
@@ -72,23 +84,38 @@ function gameTick() {
 		} else {
 			updateElement('hp',format(player.currentStone.hp)+'/'+format(player.currentStone.maxHp))
 		}
+		updateElement('stoneAmount',format(player.stone))
+		updateElement('coins',format(player.coins))
 		updateClass('stoneDisplay','ore_'+player.currentStone.ore)
+		
+		var powerText
 		if (pickaxePower.lt(9.95)) {
-			updateElement('power',Math.round(pickaxePower.toNumber()*10)/10)
+			powerText=Math.round(pickaxePower.toNumber()*10)/10
 		} else {
-			updateElement('power',format(pickaxePower))
+			powerText=format(pickaxePower)
 		}
+		if (totalHPS.gt(0)) {
+			if (totalHPS.lt(9.95)) {
+				powerText=powerText+' ('+Math.round(totalHPS.toNumber()*10)/10+'/s)'
+			} else {
+				powerText=powerText+' ('+format(totalHPS)+'/s)'
+			}
+		}
+		updateElement('power',powerText)
+		
 		if (player.rank>1) {
 			showElement('frame_upgrades','block')
+			showElement('frame_ores','block')
 			
 			var oreListText=''
 			for (ore in ores) {
 				if (player.ores[ore]!=undefined) oreListText=oreListText+ore+': '+format(player.ores[ore])+'<br>'
 			}
 			if (oreListText=='') {
-				hideElement('frame_ores')
+				hideElement('sell')
+				updateElement('ores','')
 			} else {
-				showElement('frame_ores','block')
+				showElement('sell','block')
 				updateElement('ores',oreListText)
 				if (coinGain.eq(1)) {
 					updateElement('sell','Sell ores<br>(+1 coin)')
@@ -159,6 +186,7 @@ function gameTick() {
 		}
 	}
 	if (currentTab=='options') {
+		updateElement('saveGame','Save<br>('+sinceLastSave+'s ago)')
 		updateElement('notationOption','Notation: <br>'+notationArray[player.options.notation])
 		if (player.options.updateRate==Number.MAX_VALUE) {
 			updateElement('updateRate','Update rate:<br>Unlimited')
@@ -217,7 +245,7 @@ function updateCoinGain() {
 	for (ore in player.ores) {
 		if (ores[ore]!=undefined) coinGainTemp=coinGainTemp.add(player.ores[ore].times(Math.pow(ores[ore].mult,1.2)))
 	}
-	if (player.upgrades.includes(4)) coinGainTemp=coinGainTemp.times(2)
+	if (player.upgrades.includes(5)) coinGainTemp=coinGainTemp.times(2)
 		
 	coinGainTemp=coinGainTemp.floor()
 	coinGain=coinGainTemp
@@ -237,18 +265,24 @@ function buyUpgrade(upgradeNum) {
 		player.coins=player.coins.sub(upgCost)
 		player.upgrades.push(upgradeNum)
 		
-		if (upgradeNum==1) updatePickaxePower()
+		if (upgradeNum==1) updateHPS()
 		if (upgradeNum==2) updatePickaxePower()
 		if (upgradeNum==3) updatePickaxePower()
-		if (upgradeNum==4) updateCoinGain()
+		if (upgradeNum==4) updatePickaxePower()
+		if (upgradeNum==5) updateCoinGain()
 	}
+}
+
+function updateHPS() {
+	totalHPS=new Decimal(0)
+	if (player.upgrades.includes(1)) totalHPS=new Decimal(2)
 }
 
 function updatePickaxePower() {
 	pickaxePower=new Decimal(1)
-	if (player.upgrades.includes(1)) pickaxePower=new Decimal(1.5)
-	if (player.upgrades.includes(2)) pickaxePower=pickaxePower.times(1.5)
+	if (player.upgrades.includes(2)) pickaxePower=new Decimal(1.5)
 	if (player.upgrades.includes(3)) pickaxePower=pickaxePower.times(1.5)
+	if (player.upgrades.includes(4)) pickaxePower=pickaxePower.times(1.5)
 }
 
 function updateNextDepthRequirement() {
